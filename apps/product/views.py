@@ -36,6 +36,24 @@ class ProductDetailView(Resource):
 		"""
 		"""
 		product_id = kwargs.get('product_id')
-		data = list(mongo.db.product.find({ "_id": ObjectId(product_id) }))
+		try:
+			obj_id = ObjectId(product_id)
+		except:
+			return {'message':'Invalid product ID'}, 400
+
+		data = mongo.db.product.find_one({ "_id": obj_id })
 		return jsonify(data)
-		
+
+
+class CategoryView(Resource):
+	"""
+	"""
+	def get(self, *args, **kwargs):
+		data = list(mongo.db.Category.find())
+		return jsonify(data)
+
+	def post(self, *args, **kwargs):
+		data = request.json
+		mongo.db.Category.insert_many(data)
+		return jsonify({'message':'success'})
+
