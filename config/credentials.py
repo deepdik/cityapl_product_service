@@ -7,11 +7,25 @@ ALLOWED_HOSTS = []
 
 
 DATABASES = {
-    'development': {
-        'MONGODB_DB': 'kumkd',
-        'MONGODB_HOST': 'kumkd',
-        'MONGODB_PORT': 'celcoevb0312.us.oracle.com',
-        'MONGODB_USERNAME': '1522',
+    'mysql_rds': {
+        'NAME': 'cityapl',
+        'USER': 'admin',
+        'PASSWORD': 'cityapl_rds123',
+        'HOST': 'cityapl-database-1.cyvpsljpkc8d.ap-south-1.rds.amazonaws.com',
+        'PORT': '3306',
+        },
+    'postgres': {
+        'NAME': 'cityapl',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+        },
+    'mongo': {
+        'MONGODB_DB': '',
+        'MONGODB_HOST': '',
+        'MONGODB_PORT': '',
+        'MONGODB_USERNAME': '',
         'MONGODB_PASSWORD': ''
     },
     'production': {
@@ -29,4 +43,5 @@ DATABASES = {
         'PORT': '********',
 
     }
+
 }

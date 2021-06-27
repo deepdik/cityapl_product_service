@@ -4,7 +4,7 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 from flask_restful import Api
 
-from config.db_connect import DBConnector
+from config.db_connect import DBConnector, MysqlDBConnector, PostgresDBConnector
 
 from config.settings import DevConfig
 from utils.middlewares import OperationLogMiddleware
@@ -29,9 +29,12 @@ app.wsgi_app = OperationLogMiddleware(app.wsgi_app)
 api = Api(app, prefix='/api/v1')
 
 
-
 # datbase connect
 mongo = DBConnector.connect_with_pool(app)
+
+# mysql = MysqlDBConnector.connect_with_pool(app)
+
+postgres = PostgresDBConnector.connect_with_pool(app)
 
 #init urls
 from config.routers import initialize_routes

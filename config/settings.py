@@ -19,7 +19,7 @@ class ProdConfig(Config):
     """
     FLASK_ENV = 'production'
     ENV = 'production'
-    DATABASE = DATABASES['production']
+    DATABASE = DATABASES['postgres']
 
 
 class DevConfig(Config):
@@ -29,7 +29,7 @@ class DevConfig(Config):
     FLASK_ENV = 'development'
     ENV = 'development'
     DEBUG = True
-    DATABASE = DATABASES['development']
+    DATABASE = DATABASES['postgres']
     
 
 class TestConfig(Config):
