@@ -22,7 +22,7 @@ class Product(Resource):
 		"""
 		"""
 		data = list(mongo.db.product.find())
-		return jsonify(data)
+		return jsonify({'data': data})
  
 	def post(self, *args, **kwargs):
 		data = []
@@ -45,7 +45,7 @@ class ProductDetailView(Resource):
 			return {'message':'Invalid product ID'}, 400
 
 		data = mongo.db.product.find_one({ "_id": obj_id })
-		return jsonify(data)
+		return jsonify({'data': data})
 
 
 class CategoryView(Resource):
@@ -53,7 +53,7 @@ class CategoryView(Resource):
 	"""
 	def get(self, *args, **kwargs):
 		data = list(mongo.db.Category.find())
-		return jsonify(data)
+		return jsonify({'data':data})
 
 	def post(self, *args, **kwargs):
 		data = request.json
@@ -69,7 +69,7 @@ class CategorySubcategoryView(Resource):
 		"""
 		"""
 		data = PostgresExcecuteQuery.fetch_data(postgres, get_cat_sub_vert)
-		return make_response(jsonify(data), 200)
+		return {'data':data}, 200
 
 
 class VerticalAttributesView(Resource):
