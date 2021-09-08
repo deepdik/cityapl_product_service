@@ -166,7 +166,7 @@ class VerticalAttributesView(Resource):
                     "displayName": "CESS",
                     "fieldType": "DropDown",
                     "isRequired": "true",
-                    "isMultiselect": "false",
+                    "isMultiselect": False,
                     "options": ["18%","13%","12%"]
                 }
             ]
