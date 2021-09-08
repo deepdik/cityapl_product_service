@@ -75,7 +75,7 @@ class CategorySubcategoryView(Resource):
 class VerticalAttributesView(Resource):
 	"""
 	"""
-	@cache.cached(timeout=50)
+	# @cache.cached(timeout=50)
 	def get(self, *args, **kwargs):
 		"""
 		"""
