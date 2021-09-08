@@ -59,7 +59,6 @@ class PostgresDBConnector:
         user = app.config['DATABASE'].get('USER')
         password = app.config['DATABASE'].get('PASSWORD')
         database_name = app.config['DATABASE'].get('NAME')
-    
         postgreSQL_pool = psycopg2.pool.SimpleConnectionPool(
             1,
             15,

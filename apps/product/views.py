@@ -6,7 +6,7 @@ from flask_restful import Resource
 from bson.json_util import dumps
 from bson import ObjectId
 
-from app import mongo, postgres
+from app import mongo, postgres, cache
 from config.db_connect import PostgresExcecuteQuery
 from utils import pylogger
 from utils.decorators import authenticate
@@ -75,15 +75,107 @@ class CategorySubcategoryView(Resource):
 class VerticalAttributesView(Resource):
 	"""
 	"""
+	@cache.cached(timeout=50)
 	def get(self, *args, **kwargs):
 		"""
 		"""
-
 		vertical_id = kwargs.get('vertical_id')
 		cat = PostgresExcecuteQuery.fetch_data(
 			postgres,
 			get_attributes_by_vertical,
 			(vertical_id,)
 		)
-		
-		return {'data': cat}, 200
+
+		data = [
+					  {
+					    "unitType":"BRAND_SELECTION",
+					    "data":[
+					                  {
+					                      "id": 1,
+					                      "brandName": "Apple",
+					                      "isActive": true
+					                  }
+					              ]
+					  },
+				  {
+				  "unitType": "ITEM_SPECIFICATION",
+				  "data":[
+		                 {
+		                    "id": 1,
+		                    "attribute_name": "Size",
+		                    "displayName": "Size",
+		                    "fieldType": "Select",
+		                    "isRequired": true,
+		                    "isMultiselect": false,
+		                    "options": [
+		                        "Standard",
+		                        "Large",
+		                        "Small"
+		                    ]
+		                },
+		                {
+		                    "id": 2,
+		                    "attribute_name": "USBVersion",
+		                    "displayName": "USB Version",
+		                    "fieldType": "Select",
+		                    "isRequired": true,
+		                    "isMultiselect": false,
+		                    "options": [
+		                        "USB 2.0",
+		                        "USB 3.0"
+		                    ]
+		                }
+		            ]
+				  },
+				  {
+				  "unitType": "ADD_PHOTOS",
+				  "data":[]
+				  },
+				  {"unitType":"MOQ_PRICE_GST_CESS",
+				    "data":[
+		                {
+		                    "id": 1,
+		                    "attribute_name": "MOQ",
+		                    "displayName": "MOQ",
+		                    "fieldType": "Input",
+		                    "isRequired": true,
+		                    "isMultiselect": false,
+		                    "options": []
+		                },
+		                {
+		                    "id": 2,
+                    "attribute_name": "PRICE",
+                    "displayName": "PRICE",
+                    "fieldType": "Input",
+                    "isRequired": true,
+                    "isMultiselect": false,
+                    "options": []
+                },
+                {
+                    "id": 3,
+                    "attribute_name": "GST",
+                    "displayName": "GST",
+                    "fieldType": "DropDown",
+                    "isRequired": true,
+                    "isMultiselect": false,
+                    "options": ["18%","13%","12%"]
+                },
+                {
+                    "id": 3,
+                    "attribute_name": "CESS",
+                    "displayName": "CESS",
+                    "fieldType": "DropDown",
+                    "isRequired": true,
+                    "isMultiselect": false,
+                    "options": ["18%","13%","12%"]
+                }
+            ]
+			  },
+			  
+			  {"unitType":"GEO_RESTRICTION",
+			    "data":["Banglore","Patna","Manali","Singapore"]
+			  }
+
+			]
+				
+		return {'data': data}, 200

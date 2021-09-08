@@ -20,6 +20,7 @@ class ProdConfig(Config):
     FLASK_ENV = 'production'
     ENV = 'production'
     DATABASE = DATABASES['postgres']
+    CACHE = REDIS_CACHE
 
 
 class DevConfig(Config):
@@ -30,6 +31,7 @@ class DevConfig(Config):
     ENV = 'development'
     DEBUG = True
     DATABASE = DATABASES['postgres']
+    CACHE = REDIS_CACHE
     
 
 class TestConfig(Config):

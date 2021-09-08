@@ -10,6 +10,7 @@ from config.settings import DevConfig
 from utils.middlewares import OperationLogMiddleware
 from apps import product
 from utils.utils import MongoJSONEncoder, ObjectIdConverter
+from flask_caching import Cache
 
 
 # Flask app creation
@@ -28,6 +29,9 @@ app.wsgi_app = OperationLogMiddleware(app.wsgi_app)
 # Falsk -RestApi
 api = Api(app, prefix='/api/v1')
 
+print(app.config)
+# Flask Redis Caching
+cache = Cache(app, config=app.config['CACHE'])
 
 # datbase connect
 mongo = DBConnector.connect_with_pool(app)
