@@ -93,7 +93,7 @@ class VerticalAttributesView(Resource):
 					                  {
 					                      "id": 1,
 					                      "brandName": "Apple",
-					                      "isActive": "true"
+					                      "isActive": True
 					                  }
 					              ]
 					  },
@@ -105,8 +105,8 @@ class VerticalAttributesView(Resource):
 		                    "attribute_name": "Size",
 		                    "displayName": "Size",
 		                    "fieldType": "Select",
-		                    "isRequired": "true",
-		                    "isMultiselect": "false",
+		                    "isRequired": True,
+		                    "isMultiselect": True,
 		                    "options": [
 		                        "Standard",
 		                        "Large",
@@ -118,8 +118,8 @@ class VerticalAttributesView(Resource):
 		                    "attribute_name": "USBVersion",
 		                    "displayName": "USB Version",
 		                    "fieldType": "Select",
-		                    "isRequired": "true",
-		                    "isMultiselect": "false",
+		                    "isRequired": True,
+		                    "isMultiselect": True,
 		                    "options": [
 		                        "USB 2.0",
 		                        "USB 3.0"
@@ -138,8 +138,8 @@ class VerticalAttributesView(Resource):
 		                    "attribute_name": "MOQ",
 		                    "displayName": "MOQ",
 		                    "fieldType": "Input",
-		                    "isRequired": "true",
-		                    "isMultiselect": "false",
+		                    "isRequired": True,
+		                    "isMultiselect": False,
 		                    "options": []
 		                },
 		                {
@@ -147,8 +147,8 @@ class VerticalAttributesView(Resource):
                     "attribute_name": "PRICE",
                     "displayName": "PRICE",
                     "fieldType": "Input",
-                    "isRequired": "true",
-                    "isMultiselect": "false",
+                    "isRequired": True,
+                    "isMultiselect": False,
                     "options": []
                 },
                 {
@@ -156,8 +156,8 @@ class VerticalAttributesView(Resource):
                     "attribute_name": "GST",
                     "displayName": "GST",
                     "fieldType": "DropDown",
-                    "isRequired": "true",
-                    "isMultiselect": "false",
+                    "isRequired": True,
+                    "isMultiselect": False,
                     "options": ["18%","13%","12%"]
                 },
                 {
@@ -165,7 +165,7 @@ class VerticalAttributesView(Resource):
                     "attribute_name": "CESS",
                     "displayName": "CESS",
                     "fieldType": "DropDown",
-                    "isRequired": "true",
+                    "isRequired": True,
                     "isMultiselect": False,
                     "options": ["18%","13%","12%"]
                 }
