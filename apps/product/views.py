@@ -79,7 +79,6 @@ class VerticalAttributesView(Resource):
 	def get(self, *args, **kwargs):
 		"""
 		"""
-
 		vertical_id = kwargs.get('vertical_id')
 		cat = PostgresExcecuteQuery.fetch_data(
 			postgres,

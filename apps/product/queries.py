@@ -3,7 +3,7 @@
 
 get_all_active_brands = '''
 	SELECT 
-		'BRAND_SELECTION' as "UnitType",
+		'BRAND_SELECTION' as "unitType",
 		"verticalId",
 		json_agg(
 				json_build_object(
@@ -22,7 +22,7 @@ get_attributes_by_vertical = '''
 	FROM vertical as a
 	LEFT JOIN (
 		SELECT 
-			d."name" as "UnitType",
+			d."name" as "unitType",
 			c."verticalId" as "verticalId",
 			json_agg(
 					json_build_object(
