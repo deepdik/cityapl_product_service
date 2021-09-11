@@ -79,6 +79,7 @@ class VerticalAttributesView(Resource):
 	def get(self, *args, **kwargs):
 		"""
 		"""
+
 		vertical_id = kwargs.get('vertical_id')
 		cat = PostgresExcecuteQuery.fetch_data(
 			postgres,
@@ -86,96 +87,23 @@ class VerticalAttributesView(Resource):
 			(vertical_id,)
 		)
 
-		data = [
-					  {
-					    "unitType":"BRAND_SELECTION",
-					    "data":[
-					                  {
-					                      "id": 1,
-					                      "brandName": "Apple",
-					                      "isActive": True
-					                  }
-					              ]
-					  },
-				  {
-				  "unitType": "ITEM_SPECIFICATION",
-				  "data":[
-		                 {
-		                    "id": 1,
-		                    "attribute_name": "Size",
-		                    "displayName": "Size",
-		                    "fieldType": "Select",
-		                    "isRequired": True,
-		                    "isMultiselect": True,
-		                    "options": [
-		                        "Standard",
-		                        "Large",
-		                        "Small"
-		                    ]
-		                },
-		                {
-		                    "id": 2,
-		                    "attribute_name": "USBVersion",
-		                    "displayName": "USB Version",
-		                    "fieldType": "Select",
-		                    "isRequired": True,
-		                    "isMultiselect": True,
-		                    "options": [
-		                        "USB 2.0",
-		                        "USB 3.0"
-		                    ]
-		                }
-		            ]
-				  },
-				  {
-				  "unitType": "ADD_PHOTOS",
-				  "data":[]
-				  },
-				  {"unitType":"MOQ_PRICE_GST_CESS",
-				    "data":[
-		                {
-		                    "id": 1,
-		                    "attribute_name": "MOQ",
-		                    "displayName": "MOQ",
-		                    "fieldType": "Input",
-		                    "isRequired": True,
-		                    "isMultiselect": False,
-		                    "options": []
-		                },
-		                {
-		                    "id": 2,
-                    "attribute_name": "PRICE",
-                    "displayName": "PRICE",
-                    "fieldType": "Input",
-                    "isRequired": True,
-                    "isMultiselect": False,
-                    "options": []
-                },
-                {
-                    "id": 3,
-                    "attribute_name": "GST",
-                    "displayName": "GST",
-                    "fieldType": "DropDown",
-                    "isRequired": True,
-                    "isMultiselect": False,
-                    "options": ["18%","13%","12%"]
-                },
-                {
-                    "id": 3,
-                    "attribute_name": "CESS",
-                    "displayName": "CESS",
-                    "fieldType": "DropDown",
-                    "isRequired": True,
-                    "isMultiselect": False,
-                    "options": ["18%","13%","12%"]
-                }
-            ]
-			  },
-			  
-			  {"unitType":"GEO_RESTRICTION",
-			    "data":["Banglore","Patna","Manali","Singapore"]
-			  }
-
-			]
-				
-		return {'data': data}, 200
+		brand = PostgresExcecuteQuery.fetch_data(
+			postgres,
+			get_all_active_brands,
+			(vertical_id,)
+		)
+		if brand:
+			cat.append(brand[0])
+		else:
+			cat.append({
+	            "unitType": "BRAND_SELECTION",
+	            "verticalId": vertical_id,
+	            "data": []
+        	})
+		# for image section
+		cat.append({
+            "unitType": "ADD_PHOTOS",
+            "verticalId": vertical_id,
+            "data": []
+        })	
+		return {'data': cat}, 200

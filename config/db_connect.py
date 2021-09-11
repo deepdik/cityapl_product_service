@@ -92,10 +92,12 @@ class PostgresExcecuteQuery:
         """
         connection = PostgresExcecuteQuery.__get_connection_from_pool(postgreSQL_pool)
         cursor = connection.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+        record = []
         if cursor:
             try:
                 cursor.execute(query, data)
                 record = cursor.fetchall()
+                print(record)
             except Error as e:
                 print(e)
             finally:
@@ -105,7 +107,7 @@ class PostgresExcecuteQuery:
                 # and send back to connection pool
                 postgreSQL_pool.putconn(connection)
                 return record
-        return None
+        return record
 
 
 class MysqlDBConnector:

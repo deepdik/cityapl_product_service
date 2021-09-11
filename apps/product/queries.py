@@ -2,55 +2,47 @@
 """
 
 get_all_active_brands = '''
-	
 	SELECT 
-		*
- 	FROM brands
- 	WHERE isActive=1
+		'BRAND_SELECTION' as "UnitType",
+		"verticalId",
+		json_agg(
+				json_build_object(
+					'id',			   c."id",
+					'brandName',       c."brandName",
+					'isActive',        c."isActive"
+				) )AS data
+	FROM brands AS c
+	WHERE c."verticalId"=%s AND c."isActive"=true
+	GROUP BY c."verticalId"
  	'''
 
 get_attributes_by_vertical = '''
-
 	SELECT
-	 	a."id",
-	 	a."verticalName",
-	 	attributes as "vericalAttributes",
-		a."brands" as "brands"
-	FROM (
-		SELECT 
-			vertical.*,
-			json_agg(
-				json_build_object(
-					'id', 			brands."id",
-					'brandName', 	brands."brandName",
-					'isActive', 	brands."isActive" 
-				)
-			) as brands
-		FROM vertical
-		FULL OUTER JOIN brands
-		ON vertical."createdAt" != brands."createdAt"
-		WHERE brands."isActive"=true
-		GROUP by vertical."id"
-	) AS a
+	 	b.*
+	FROM vertical as a
 	LEFT JOIN (
 		SELECT 
-			b."verticalId",
+			d."name" as "UnitType",
+			c."verticalId" as "verticalId",
 			json_agg(
-				json_build_object(
-					'id',			    b."id",
-					'attribute_name',   b."attribute_name",
-					'displayName',    	b."displayName",
-					'fieldType',   		b."fieldType",
-					'isRequired',   	b."isRequired",
-					'isMultiselect',    b."isMultiselect",
-					'options',   		b."options"
-				)
-			) AS  attributes
-		FROM attribute AS b
-		GROUP BY b."verticalId"
+					json_build_object(
+						'id',			    c."id",
+						'attributeName',   	c."attribute_name",
+						'displayName',    	c."displayName",
+						'fieldType',   		c."fieldType",
+						'isRequired',   	c."isRequired",
+						'isMultiselect',    c."isMultiselect",
+						'options',   		c."options"
+					) 
+				)AS data
+		FROM attribute AS c
+		LEFT JOIN attribute_section as d
+		ON c."sectionTypeId" = d."id"
+		GROUP BY d."name", c."verticalId"
 		) AS b
 	ON a."id" = b."verticalId"
 	WHERE a."id" = %s
+
 	'''
 
 get_cat_sub_vert = '''
@@ -91,3 +83,21 @@ get_cat_sub_vert = '''
 	GROUP BY b."categoryId") AS b
 	ON a."id" = b."categoryId"
 	'''
+
+# SELECT 
+# 		d."name" as "UnitType",
+# 		json_agg(
+# 				json_build_object(
+# 					'id',			    c."id",
+# 					'attributeName',   	c."attribute_name",
+# 					'displayName',    	c."displayName",
+# 					'fieldType',   		c."fieldType",
+# 					'isRequired',   	c."isRequired",
+# 					'isMultiselect',    c."isMultiselect",
+# 					'options',   		c."options"
+# 				) )AS attt
+		
+# FROM attribute AS c
+# LEFT JOIN attribute_section as d
+# ON c."sectionTypeId" = d."id"
+# GROUP BY d."name"
