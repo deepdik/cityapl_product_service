@@ -4,45 +4,46 @@
 get_all_active_brands = '''
 	SELECT 
 		'BRAND_SELECTION' as "unitType",
-		"verticalId",
 		json_agg(
 				json_build_object(
 					'id',			   c."id",
 					'brandName',       c."brandName",
-					'isActive',        c."isActive"
+					'isActive',        d."isActive"
 				) )AS data
 	FROM brands AS c
-	WHERE c."verticalId"=%s AND c."isActive"=true
-	GROUP BY c."verticalId"
+	INNER JOIN brand_in_vertical AS d
+	ON c."id" = d."verticalId"
+	WHERE d."verticalId"=%s AND d."isActive"=true
+	GROUP BY d."verticalId"
  	'''
 
 get_attributes_by_vertical = '''
+
 	SELECT
-	 	b.*
-	FROM vertical as a
-	LEFT JOIN (
+	 	a."name" as "unitType",
+		json_agg(
+			json_build_object(
+				'id',			    a."id",
+				'attributeName',   	a."attribute_name",
+				'displayName',    	a."displayName",
+				'fieldType',   		a."fieldType",
+				'isRequired',   	a."isRequired",
+				'isMultiselect',    a."isMultiselect",
+				'options',   		a."options"
+			) 
+		) AS data
+	FROM (
 		SELECT 
-			d."name" as "unitType",
-			c."verticalId" as "verticalId",
-			json_agg(
-					json_build_object(
-						'id',			    c."id",
-						'attributeName',   	c."attribute_name",
-						'displayName',    	c."displayName",
-						'fieldType',   		c."fieldType",
-						'isRequired',   	c."isRequired",
-						'isMultiselect',    c."isMultiselect",
-						'options',   		c."options"
-					) 
-				)AS data
+			c.*,
+			d."name"
 		FROM attribute AS c
 		LEFT JOIN attribute_section as d
 		ON c."sectionTypeId" = d."id"
-		GROUP BY d."name", c."verticalId"
-		) AS b
-	ON a."id" = b."verticalId"
-	WHERE a."id" = %s
-
+		) AS a
+	INNER JOIN attribute_in_vertical AS b
+	ON b."attributeId" = a."id"
+	WHERE b."verticalId" = %s
+	GROUP BY a."name"
 	'''
 
 get_cat_sub_vert = '''
@@ -83,21 +84,3 @@ get_cat_sub_vert = '''
 	GROUP BY b."categoryId") AS b
 	ON a."id" = b."categoryId"
 	'''
-
-# SELECT 
-# 		d."name" as "UnitType",
-# 		json_agg(
-# 				json_build_object(
-# 					'id',			    c."id",
-# 					'attributeName',   	c."attribute_name",
-# 					'displayName',    	c."displayName",
-# 					'fieldType',   		c."fieldType",
-# 					'isRequired',   	c."isRequired",
-# 					'isMultiselect',    c."isMultiselect",
-# 					'options',   		c."options"
-# 				) )AS attt
-		
-# FROM attribute AS c
-# LEFT JOIN attribute_section as d
-# ON c."sectionTypeId" = d."id"
-# GROUP BY d."name"

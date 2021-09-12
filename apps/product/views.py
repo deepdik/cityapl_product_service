@@ -96,13 +96,11 @@ class VerticalAttributesView(Resource):
 		else:
 			cat.append({
 	            "unitType": "BRAND_SELECTION",
-	            "verticalId": vertical_id,
 	            "data": []
         	})
 		# for image section
 		cat.append({
             "unitType": "ADD_PHOTOS",
-            "verticalId": vertical_id,
             "data": []
         })	
 		return {'data': cat}, 200
