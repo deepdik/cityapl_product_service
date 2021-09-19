@@ -20,9 +20,9 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'REMOTE_USER', variable: 'REMOTE_USER'),
                     string(credentialsId: 'REMOTE_HOST_3', variable: 'REMOTE_HOST_3')]) {
-                    sh 'scp /config/deploy/build.sh ${REMOTE_USER}@${REMOTE_HOST_3}:~/'
-                    sh 'ssh ${REMOTE_USER}@${REMOTE_HOST_3} "chmod +x build.sh"'
-                    sh 'ssh ${REMOTE_USER}@${REMOTE_HOST_3} ./build.sh'
+                    sh 'scp /config/deploy/build.sh ubuntu@168.138.113.89:~/'
+                    sh 'ssh ubuntu@168.138.113.89 "chmod +x build.sh"'
+                    sh 'ssh ubuntu@168.138.113.89 ./build.sh'
                 }   
             }
         }
