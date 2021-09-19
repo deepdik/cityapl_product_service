@@ -16,5 +16,15 @@ pipeline {
                 sh 'docker push docker-registry.cityapl.com/cityapl_product_service'
             }
         }
+        stage('Deploy') {
+            steps {
+                withCredentials([string(credentialsId: '', variable: 'DOCKER_CRED')]) {
+                    sh 'scp /config/deploy/build.sh ${REMOTE_USER}@${REMOTE_HOST_3}:~/'
+                    sh 'ssh ${REMOTE_USER}@${REMOTE_HOST_3} "chmod +x build.sh"'
+                    sh 'ssh ${REMOTE_USER}@${REMOTE_HOST_3} ./build.sh'
+                }   
+            }
+        }
     }
 }
+
