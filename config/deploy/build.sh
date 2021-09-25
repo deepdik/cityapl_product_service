@@ -14,6 +14,7 @@ sudo docker pull ${DOCKER_IMAGE}
 
 ############### config for docker-compose ##################
 
-sudo docker run -it ${DOCKER_IMAGE} bash
-echo $(pwd)
+sudo docker run --rm --entrypoint cat ${DOCKER_IMAGE} docker-compose.yml > docker-compose.yml
+# sudo docker-compose stop
 sudo docker-compose up
+
