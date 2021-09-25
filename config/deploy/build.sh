@@ -15,4 +15,4 @@ sudo docker pull ${DOCKER_IMAGE}
 ############### config for docker-compose ##################
 
 docker run -it ${DOCKER_IMAGE} bash
-sudo docker-copose up
+sudo docker-compose up
