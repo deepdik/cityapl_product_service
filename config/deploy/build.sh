@@ -14,5 +14,6 @@ sudo docker pull ${DOCKER_IMAGE}
 
 ############### config for docker-compose ##################
 
-docker run -it ${DOCKER_IMAGE} bash
+sudo docker run -it ${DOCKER_IMAGE} bash
+echo $(pwd)
 sudo docker-compose up
