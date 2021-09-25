@@ -3,8 +3,7 @@ pipeline {
     stages {
          stage('Build Dcoker Image') {
             steps {
-            sh 'docker build -t docker-registry.cityapl.com/cityapl_product_service ./'
-            sh 'docker image list'
+            sh 'docker-compose build'
             }
         }
         
@@ -13,7 +12,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'DOCKER_CRED', variable: 'DOCKER_CRED')]) {
                      sh 'docker login https://docker-registry.cityapl.com -u cityapl_docker_registry -p ${DOCKER_CRED}'
                 }
-                sh 'docker push docker-registry.cityapl.com/cityapl_product_service'
+                sh 'docker-compose push'
             }
         }
         stage('Deploy') {

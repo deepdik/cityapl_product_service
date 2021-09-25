@@ -12,6 +12,7 @@ from utils import pylogger
 from utils.decorators import authenticate
 from .queries import *
 from flask import jsonify, make_response
+from .celery_task import *
 
 
 class Product(Resource):
@@ -75,10 +76,11 @@ class CategorySubcategoryView(Resource):
 class VerticalAttributesView(Resource):
 	"""
 	"""
-	# @cache.cached(timeout=50)
+	@cache.cached(timeout=50)
 	def get(self, *args, **kwargs):
 		"""
 		"""
+		result = add_together.delay(1, 2)
 		vertical_id = kwargs.get('vertical_id')
 		cat = PostgresExcecuteQuery.fetch_data(
 			postgres,

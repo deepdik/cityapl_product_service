@@ -1,21 +1,48 @@
 version: '3.8'
 
 services:
+
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python run.py --host 0.0.0.0:5000
+    image: docker-registry.cityapl.com/cityapl_product_service
+    command: python3 run.py --host 0.0.0.0
     volumes:
       - .:/app
     restart: on-failure
-    depends_on:
-      - redis
-    network_mode: "host"
-
+    ports: 
+      - 5000:5000
+    
   redis:
     image: redis:latest
+    ports:
+      - 6379:6379
 
+  celery_worker:
+    build:
+      context: .
+    command: /start-celeryworker
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
 
+  celery_beat:
+    build:
+      context: .
+    command: /start-celerybeat
+    depends_on:
+      - celery_worker
+      - redis
 
-    
+  flower:
+    build:
+      context: .
+    command: /start-flower
+    ports:
+      - 5557:5555
+    depends_on:
+      - celery_worker
+      - redis
+   

@@ -3,6 +3,7 @@ from datetime import datetime, date
 # import isodate as iso
 from bson import ObjectId
 from flask.json import JSONEncoder
+from importlib import import_module
 from werkzeug.routing import BaseConverter
 
 
@@ -23,3 +24,13 @@ class ObjectIdConverter(BaseConverter):
 
     def to_url(self, value):
         return str(value)
+
+
+def include_routers(module, api):
+    """
+    Include all the urls in module
+    """
+    mod = import_module(module)
+    routes = getattr(mod, 'initialize_routes')
+    routes(api)
+

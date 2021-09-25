@@ -11,6 +11,7 @@ from utils.middlewares import OperationLogMiddleware
 from apps import product
 from utils.utils import MongoJSONEncoder, ObjectIdConverter
 from flask_caching import Cache
+from config.celery.celery import make_celery
 
 
 # Flask app creation
@@ -18,6 +19,7 @@ app = Flask(__name__)
 app.json_encoder = MongoJSONEncoder
 app.url_map.converters['objectid'] = ObjectIdConverter
 
+app.config.from_object('config.credentials')
 app.config.from_object(DevConfig())
 
 # CORS 
@@ -40,8 +42,9 @@ mongo = DBConnector.connect_with_pool(app)
 
 postgres = PostgresDBConnector.connect_with_pool(app)
 
+celery = make_celery(app)
+
 #init urls
-from config.routers import initialize_routes
+from apps.routers import initialize_routes
 initialize_routes(api)
 app.url_map.strict_slashes = False
-
