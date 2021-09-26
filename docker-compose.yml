@@ -22,6 +22,10 @@ services:
   celery_worker:
     build:
       context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    image: docker-registry.cityapl.com/celery_worker_cityapl_product_service
     command: /start-celeryworker
     volumes:
       - .:/app
@@ -31,6 +35,10 @@ services:
   celery_beat:
     build:
       context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    image: docker-registry.cityapl.com/celery_beat_cityapl_product_service
     command: /start-celerybeat
     depends_on:
       - celery_worker
@@ -39,6 +47,10 @@ services:
   flower:
     build:
       context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    image: docker-registry.cityapl.com/celery_flower_cityapl_product_service
     command: /start-flower
     ports:
       - 5557:5555
