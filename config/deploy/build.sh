@@ -24,7 +24,7 @@ sudo docker-compose pull
 # sudo docker-compose stop
   
 sudo docker-compose up redis
-sudo docker run -d -p 5000:5000 ${DOCKER_IMAGE_WEB}
-sudo docker run -d ${DOCKER_IMAGE_CELERY}
-sudo docker run -d ${DOCKER_IMAGE_BEAT}
-sudo docker run -d ${DOCKER_IMAGE_FLOWER}
+sudo docker run  -p 5000:5000 ${DOCKER_IMAGE_WEB}
+sudo docker run  ${DOCKER_IMAGE_CELERY}
+sudo docker run  ${DOCKER_IMAGE_BEAT}
+sudo docker run  ${DOCKER_IMAGE_FLOWER}
