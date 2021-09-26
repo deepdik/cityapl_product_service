@@ -23,8 +23,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - .:/app
     image: docker-registry.cityapl.com/celery_worker_cityapl_product_service
     command: /start-celeryworker
     volumes:
