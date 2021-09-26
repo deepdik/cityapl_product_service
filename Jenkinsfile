@@ -19,7 +19,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'REMOTE_USER', variable: 'REMOTE_USER'),
                     string(credentialsId: 'REMOTE_HOST_3', variable: 'REMOTE_HOST_3')]) {
-                    sh 'scp -v -o StrictHostKeyChecking=no "." ${REMOTE_USER}@${REMOTE_HOST_3}:~/'
+                    sh 'scp -v -o StrictHostKeyChecking=no  -r "/" ${REMOTE_USER}@${REMOTE_HOST_3}:~/'
 
                 }   
             }
