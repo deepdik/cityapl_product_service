@@ -3,6 +3,7 @@ pipeline {
     stages {
          stage('Build Dcoker Image') {
             steps {
+            sh 'docker image prune -f'
             sh 'docker-compose build'
             }
         }

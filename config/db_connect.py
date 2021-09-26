@@ -10,6 +10,7 @@ import psycopg2
 from psycopg2 import pool
 import psycopg2.extras
 
+
 class DBConnector:
     """
     Singleton class for database connection
