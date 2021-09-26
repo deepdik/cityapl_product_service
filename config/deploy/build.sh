@@ -16,5 +16,8 @@ sudo docker pull ${DOCKER_IMAGE}
 
 sudo docker run --rm --entrypoint cat ${DOCKER_IMAGE} docker-compose.yml > docker-compose.yml
 # sudo docker-compose stop
-sudo docker-compose up
+docker-compose stop
+docker-compose rm -f
+docker-compose pull   
+docker-compose up -d
 
