@@ -52,7 +52,7 @@ get_cat_sub_vert = '''
 		a."categoryName",
 		a."id",
         a."isActive",
-        subcategories AS "subcategories"
+        subcategories AS "subCategories"
 	From category AS a
 	LEFT JOIN (
 		SELECT 
