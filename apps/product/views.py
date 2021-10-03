@@ -106,3 +106,4 @@ class VerticalAttributesView(Resource):
             "data": []
         })	
 		return {'data': cat}, 200
+
