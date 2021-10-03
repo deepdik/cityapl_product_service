@@ -17,8 +17,8 @@ git clone https://deepdik:${GIT_CRED}@github.com/deepdik/${SERVICE_NAME}.git
 
 cd ${SERVICE_NAME}
 
-sudo docker-compose down
-sudo docker image prune -f 
+sudo docker-compose stop
+sudo docker image prune -a -f 
 sudo docker login https://docker-registry.cityapl.com -u cityapl_docker_registry -p ${DOCKER_CRED}
 sudo docker-compose pull
 sudo docker-compose up -d
